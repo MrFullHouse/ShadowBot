@@ -1,0 +1,6 @@
+{
+    "path":"YOUR_PATH_WAY",
+    "api_key":"YOUR_API_KEY",
+    "discord_token":"YOUR_TOKEN_KEY",
+    "servers":["YOUR_DISKORD_SERVER_INVITE_TOKEN (only last simbols"]
+}
