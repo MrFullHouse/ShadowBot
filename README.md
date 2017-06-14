@@ -2,9 +2,9 @@ ShadowBot is a discord bot to assist with simming World of Warcraft.
 
 ShadowBot will run Simcraft for a UNIX environment and output a pawn string, DPS sim results, and link to html simulation file (need apache2 server on bot machine). Currently US and EU regions are supported.
 
-TempleBot is based off of Silkybot 0.9 (which is configured for Windows), the link to the repo can be found in the fork, or here: https://github.com/troyredfearn/silkybot.
+ShadowBot is based off of Silkybot 0.9 (which is configured for Windows), the link to the repo can be found in the fork, or here: https://github.com/troyredfearn/silkybot.
 
-TembleBot requires BeautifulSoup, Discord.py, Simcraft, a Blizzard API key, and a Discord App turned bot
+ShadowBot requires BeautifulSoup, Discord.py, Simcraft, a Blizzard API key, and a Discord App turned bot
 
 BeautifulSoup can be found: https://www.crummy.com/software/BeautifulSoup/
 Discord.py's github is: https://github.com/Rapptz/discord.py
