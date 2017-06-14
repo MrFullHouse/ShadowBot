@@ -18,7 +18,7 @@ with open('config.json') as config_data:
     token = config_json['discord_token']
 
 #Returns true if character exists on armory, false otherwise
-def char_exists(character,server, region):
+def char_exists(character, server, region):
     try:
         print('https://%s.api.battle.net/wow/character/%s/%s?locale=en_US&apikey=%s' % (region, server, character, api_key))
         requests.get('https://%s.api.battle.net/wow/character/%s/%s?locale=en_US&apikey=%s' % (region, server, character, api_key))
@@ -37,33 +37,28 @@ def charstrip(message, strip):
 def serverstrip(message):
     head, sep, tail = message.partition('-')
     head1, sep1, tail1 = tail.partition('-')
-#    return head1.capitalize().strip().replace(" ", "-");
+# Constants of Russian servers (for use name-рф-ру exclude name-ревущий фьорд-ру), can be deleted
     if head1.strip().lower()=="рф":
-     return "Ревущий-фьорд";
-    if head1.strip().lower()=="пб":
-     return "Пиратская-бухта";
-    if head1.strip().lower()=="сд":
-     return "Свежеватель-душ";
-    if head1.strip().lower()=="чш":
-     return "Черный-шрам";
-    if head1.strip().lower()=="вп":
-     return "Вечная-песня";
-    if head1.strip().lower()=="кл":
-     return "Король-лич";
-    if head1.strip().lower()=="сс":
-     return "Страж-смерти";
-    if head1.strip().lower()=="бт":
-     return "Борейская-тундра";
-    if head1.strip().lower()=="ял":
-     return "Ясеневый-лес";
-    if head1.strip().lower()=="тс":
-     return "Ткач-смерти";
-#    return head1.capitalize().strip()="Ревущий фьорд";
-#    if (tail1.lower() == "us" or tail1.lower() =="na"):
-#        region = "us";
-#    if (tail1.lower() == "eu" or tail1.lower() =="ru" or tail1.lower() =="еу" or tail1.lower() =="ру"):
-#        region = "eu";
-
+        return "Ревущий-фьорд";
+    elif head1.strip().lower()=="пб":
+        return "Пиратская-бухта";
+    elif head1.strip().lower()=="сд":
+        return "Свежеватель-душ";
+    elif head1.strip().lower()=="чш":
+        return "Черный-шрам";
+    elif head1.strip().lower()=="вп":
+        return "Вечная-песня";
+    elif head1.strip().lower()=="кл":
+        return "Король-лич";
+    elif head1.strip().lower()=="сс":
+        return "Страж-смерти";
+    elif head1.strip().lower()=="бт":
+        return "Борейская-тундра";
+    elif head1.strip().lower()=="ял":
+        return "Ясеневый-лес";
+    elif head1.strip().lower()=="тс":
+        return "Ткач-смерти";
+#Work only if constant not exist (with rule only "server name")
     return head1.capitalize().strip().replace(" ", "-");
 
 #Returns Regionname from '!command charactername-servername' input
@@ -240,7 +235,7 @@ def on_message(message):
         region = regionfind(message.content).strip()
         escapeAuthor = author.mention.replace(">", "\>").replace("<", "\<")
         print('Ищем %s - %s - %s' % (character, server, region))
-#        yield from client.send_message(message.channel, 'Считаем статы для %s - %s - %s. Если одновременно поступило несколько вопросов я могу подвиснуть. Будьте взаимовежливы ' % (character, server, region))
+#yield from client.send_message(message.channel, 'Считаем статы для %s - %s - %s. Если одновременно поступило несколько вопросов я могу подвиснуть. Будьте взаимовежливы ' % (character, server, region))
         if char_exists(character, server, region):
             print("Go Go Go")
             isDPS = is_dps(character, server, region)
@@ -249,7 +244,7 @@ def on_message(message):
             print('Looking at %s - %s - %s who exists and is a %s' % (character, server, region, spec ))
             if (isDPS or spec == 'Shadow'):
                 if(spec == 'Shadow' or True):
-#                    yield from client.send_message(message.channel, 'Мне требуется несколько минут чтоб обработать этот запрос. Я позову когда закончу рассчеты')
+#yield from client.send_message(message.channel, 'Мне требуется несколько минут чтоб обработать этот запрос. Я позову когда закончу рассчеты')
                     yield from client.send_message(message.channel, 'Текущий спек для %s-%s-%s: %s. Последнее обновление армори: %s' % (character, server, region, spec, armory_date(character, server, region)))                            
                     if(run2):
                         print('Starting a 2 target standalone')
@@ -265,16 +260,16 @@ def on_message(message):
                         subprocess.Popen('python3 sim.py %s %s %s %s %s 1 no' % (character, server, message.channel.id, escapeAuthor, region), shell=True)
                     elif(runStandalone):
                         print('Starting a 1 target standalone')
-#                        yield from client.send_message(message.channel, 'Начинаю сим для  %s - %s - %s. Это займёт несколько минут' % (character, server, region))
+#yield from client.send_message(message.channel, 'Начинаю сим для  %s - %s - %s. Это займёт несколько минут' % (character, server, region))
                         subprocess.Popen('python3 sim.py %s %s %s %s %s 1 yes' % (character, server, message.channel.id, escapeAuthor, region), shell=True)
                     elif(runDPS):
                         print('Starting DPS only')
-#                        yield from client.send_message(message.channel, 'Начинаю сим для  %s - %s - %s. Это займет несколько минут' % (character, server, region))
+#yield from client.send_message(message.channel, 'Начинаю сим для  %s - %s - %s. Это займет несколько минут' % (character, server, region))
                         subprocess.Popen('python3 dps.py %s %s %s %s %s' % (character, server, message.channel.id, escapeAuthor, region), shell=True)
                     else:
-                        #Failsafe is single sim
+#Failsafe is single sim
                         print('I shouldn\'t be here, but gonna run a single target sim')
-#                        yield from client.send_message(message.channel, 'Начинаю сим для %s - %s - %s. Это займет несколько минут' % (character, server, region))
+#yield from client.send_message(message.channel, 'Начинаю сим для %s - %s - %s. Это займет несколько минут' % (character, server, region))
                         subprocess.Popen('python3 sim.py %s %s %s %s %s 1 yes' % (character, server, message.channel. id, escapeAuthor, region), shell=True)
                 else:
                     yield from client.send_message(message.channel, '%s: Добро пожаловать отсюда' % author.mention)
