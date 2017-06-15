@@ -1,6 +1,11 @@
 {
-    "path":"YOUR_PATH_WAY",
-    "api_key":"YOUR_API_KEY",
-    "discord_token":"YOUR_TOKEN_KEY",
-    "servers":["YOUR_DISKORD_SERVER_INVITE_TOKEN (only last simbols"]
+#your path to simulationcraft
+    "path":"/home/user001/simc/",
+#your blizzard api key (visit dev.battle.net)
+    "api_key":"wertyuiopdfghjklfghjkl",
+#your discord bot token
+    "discord_token":"qwertyuioasdfghjkl.zxcvbnmasdfghjk",
+#your server invite (only last symbols, exp. "dAAKtIi")
+    "servers":[""]
 }
+#dont forget to create "apikey.txt" with same api_key to simc directory

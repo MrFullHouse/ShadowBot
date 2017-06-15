@@ -91,7 +91,7 @@ print(
     simcraft_path, region, server, character, numberTargets, character, server, region, numberTargets, character,
     region, numberTargets))
 subprocess.call(
-    '%s./simc armory=%s,%s,%s calculate_scale_factors=1 scale_only=intellect,crit_rating,haste_rating,mastery_rating,versatility_rating iterations=10000 desired_targets=%s html=%s-%s-%s-%s.html output=%s-%s-%s.txt' % (
+    '%s./simc armory=%s,%s,%s calculate_scale_factors=1 scale_only=intellect,crit_rating,haste_rating,mastery_rating,versatility_rating iterations=333000 desired_targets=%s html=%s-%s-%s-%s.html output=%s-%s-%s.txt' % (
     simcraft_path, region, server, character, numberTargets, character, server, region, numberTargets, character,
     region, numberTargets), cwd=simcraft_path, shell=True)
 client.run(token)

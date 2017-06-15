@@ -40,5 +40,5 @@ def on_ready():
         yield from client.logout()
 
 print('%s./simc armory=%s,%s,%s calculate_scale_factors=0 iterations=10000 html=%s-%s-%s-dps.html output=%s-%s.txt fight_style=PatchWerk' % (simcraft_path, region, server, character, character, server, region, character, region))
-subprocess.call('%s./simc armory=%s,%s,%s calculate_scale_factors=0 iterations=10000 html=%s-%s-%s-dps.html output=%s-%s.txt fight_style=PatchWerk' % (simcraft_path, region, server, character, character, server, region, character, region), cwd=simcraft_path, shell=True)
+subprocess.call('%s./simc armory=%s,%s,%s calculate_scale_factors=0 iterations=3000 html=%s-%s-%s-dps.html output=%s-%s.txt fight_style=PatchWerk' % (simcraft_path, region, server, character, character, server, region, character, region), cwd=simcraft_path, shell=True)
 client.run(token)
