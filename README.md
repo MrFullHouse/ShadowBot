@@ -12,9 +12,13 @@ Simcraft can be downloaded at: http://www.simulationcraft.org/download.html
 Simcraft's github can be found at: https://github.com/simulationcraft/simc
 Build instructions for simcraft can be found at: https://github.com/simulationcraft/simc/wiki/HowToBuild
 (in Ubuntu Server i always use next commands:
+
 git clone https://github.com/simulationcraft/simc
+
 cd engine/
+
 make OPENSSL=1 optimized)
+
 To register for a Blizzard API key, go here: https://dev.battle.net/
 To register a Discord app, go here: https://discordapp.com/developers/applications
 
