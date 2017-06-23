@@ -39,7 +39,7 @@ def pawnstrip(character, server, region, numberTargets, standAlone):
     except:
         print('Bad sim, cannot find %s%s-%s-%s-%s.html' % (simcraft_path, character, server, region, numberTargets))
         return 'Ошибка Blizzard API. Вероятнее всего требуется релогнуться персонажем в shadow спеке'
-
+    
 def damagestrip(character, server, region, numberTargets):
     with open('%s%s-%s-%s-%s.html' % (simcraft_path, character, server, region, numberTargets), encoding='utf8') as infile:
         soup = BeautifulSoup(infile, "html.parser")
@@ -61,37 +61,21 @@ def mod_date(filename):
 def on_ready():
         for x in config_json['servers']:
             client.accept_invite(x)
-        yield from client.send_message(client.get_channel(channel),
-                                       '%s: Вес статов для %s посчитан. Бой для %a цели(ей)' % (
-                                       author, character, numberTargets))
-        #        yield from client.send_message(client.get_channel(channel), '%s: Напомню что это только для %s текущих талантов и вещей! Разные таланты дадут разные веса.' % (author, character))
-        yield from client.send_message(client.get_channel(channel), '%s: %s' % (
-        author, pawnstrip(character, server, region, numberTargets, standAlone)))
-        yield from client.send_message(client.get_channel(channel),
-                                       '%s: %s' % (author, damagestrip(character, server, region, numberTargets)))
-        yield from client.send_message(client.get_channel(channel),
-                                       'Ссылка: http://52.88.164.238/output/%s-%s-%s-%s.html' % (
-                                       character, server, region, numberTargets))
-        if (numberTargets == '1' and standAlone == "no"):
-            yield from client.send_message(client.get_channel(channel), 'Начинаю симуляцию для 2 целей')
-            subprocess.Popen('python3 sim.py %s %s %s %s %s 2 no' % (character, server, channel, escapeAuthor, region),
-                             shell=True)
-        elif (numberTargets == '2' and standAlone == "no"):
-            yield from client.send_message(client.get_channel(channel), 'Начинаю симуляцию для 3 целей')
-            subprocess.Popen('python3 sim.py %s %s %s %s %s 3 no' % (character, server, channel, escapeAuthor, region),
-                             shell=True)
-        elif (numberTargets == '3' and standAlone == "no"):
-            yield from client.send_message(client.get_channel(channel), 'Такие дела')
+        yield from client.send_message(client.get_channel(channel), '%s: Вес статов для %s посчитан. Бой для %a цели(ей)' % (author, character, numberTargets))
+#        yield from client.send_message(client.get_channel(channel), '%s: Напомню что это только для %s текущих талантов и вещей! Разные таланты дадут разные веса.' % (author, character))
+        yield from client.send_message(client.get_channel(channel), '%s: %s' % (author, pawnstrip(character, server, region, numberTargets, standAlone)))
+        yield from client.send_message(client.get_channel(channel), '%s: %s' % (author, damagestrip(character, server, region, numberTargets)))
+        yield from client.send_message(client.get_channel(channel), 'Ссылка: http://52.88.164.238/output/%s-%s-%s-%s.html' % (character, server, region, numberTargets))
+        if(numberTargets == '1' and standAlone == "no"):
+            yield from client.send_message(client.get_channel(channel), 'Начинаю симуляцию для 2 целей')                    
+            subprocess.Popen('python3 sim.py %s %s %s %s %s 2 no' % (character, server, channel, escapeAuthor, region), shell=True)
+        elif(numberTargets == '2' and standAlone == "no"):
+            yield from client.send_message(client.get_channel(channel), 'Начинаю симуляцию для 3 целей')                    
+            subprocess.Popen('python3 sim.py %s %s %s %s %s 3 no' % (character, server, channel, escapeAuthor, region), shell=True)
+        elif(numberTargets == '3' and standAlone == "no"):
+            yield from client.send_message(client.get_channel(channel), 'Такие дела')          
         yield from client.logout()
-
-
 print('Starting sim:')
-print(
-    '%s./simc armory=%s,%s,%s calculate_scale_factors=1 scale_only=intellect,crit_rating,haste_rating,mastery_rating,versatility_rating iterations=10000 desired_targets=%s html=%s-%s-%s-%s.html output=%s-%s-%s.txt' % (
-    simcraft_path, region, server, character, numberTargets, character, server, region, numberTargets, character,
-    region, numberTargets))
-subprocess.call(
-    '%s./simc armory=%s,%s,%s calculate_scale_factors=1 scale_only=intellect,crit_rating,haste_rating,mastery_rating,versatility_rating iterations=333000 desired_targets=%s html=%s-%s-%s-%s.html output=%s-%s-%s.txt' % (
-    simcraft_path, region, server, character, numberTargets, character, server, region, numberTargets, character,
-    region, numberTargets), cwd=simcraft_path, shell=True)
+print('%s./simc armory=%s,%s,%s calculate_scale_factors=1 scale_only=intellect,crit_rating,haste_rating,mastery_rating,versatility_rating iterations=10000 desired_targets=%s html=%s-%s-%s-%s.html output=%s-%s-%s.txt' % (simcraft_path, region, server, character, numberTargets, character, server, region, numberTargets, character, region, numberTargets))
+subprocess.call('%s./simc armory=%s,%s,%s calculate_scale_factors=1 scale_only=intellect,crit_rating,haste_rating,mastery_rating,versatility_rating iterations=3000 desired_targets=%s html=%s-%s-%s-%s.html output=%s-%s-%s.txt' % (simcraft_path, region, server, character, numberTargets, character, server, region, numberTargets, character, region, numberTargets), cwd=simcraft_path, shell=True)
 client.run(token)

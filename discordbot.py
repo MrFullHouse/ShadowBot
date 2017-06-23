@@ -18,7 +18,7 @@ with open('config.json') as config_data:
     token = config_json['discord_token']
 
 #Returns true if character exists on armory, false otherwise
-def char_exists(character, server, region):
+def char_exists(character,server, region):    
     try:
         print('https://%s.api.battle.net/wow/character/%s/%s?locale=en_US&apikey=%s' % (region, server, character, api_key))
         requests.get('https://%s.api.battle.net/wow/character/%s/%s?locale=en_US&apikey=%s' % (region, server, character, api_key))
@@ -37,28 +37,33 @@ def charstrip(message, strip):
 def serverstrip(message):
     head, sep, tail = message.partition('-')
     head1, sep1, tail1 = tail.partition('-')
-# Constants of Russian servers (for use name-рф-ру exclude name-ревущий фьорд-ру), can be deleted
+#    return head1.capitalize().strip().replace(" ", "-");
     if head1.strip().lower()=="рф":
-        return "Ревущий-фьорд";
-    elif head1.strip().lower()=="пб":
-        return "Пиратская-бухта";
-    elif head1.strip().lower()=="сд":
-        return "Свежеватель-душ";
-    elif head1.strip().lower()=="чш":
-        return "Черный-шрам";
-    elif head1.strip().lower()=="вп":
-        return "Вечная-песня";
-    elif head1.strip().lower()=="кл":
-        return "Король-лич";
-    elif head1.strip().lower()=="сс":
-        return "Страж-смерти";
-    elif head1.strip().lower()=="бт":
-        return "Борейская-тундра";
-    elif head1.strip().lower()=="ял":
-        return "Ясеневый-лес";
-    elif head1.strip().lower()=="тс":
-        return "Ткач-смерти";
-#Work only if constant not exist (with rule only "server name")
+     return "Ревущий-фьорд";
+    if head1.strip().lower()=="пб":
+     return "Пиратская-бухта";
+    if head1.strip().lower()=="сд":
+     return "Свежеватель-душ";
+    if head1.strip().lower()=="чш":
+     return "Черный-шрам";
+    if head1.strip().lower()=="вп":
+     return "Вечная-песня";
+    if head1.strip().lower()=="кл":
+     return "Король-лич";
+    if head1.strip().lower()=="сс":
+     return "Страж-смерти";
+    if head1.strip().lower()=="бт":
+     return "Борейская-тундра";
+    if head1.strip().lower()=="ял":
+     return "Ясеневый-лес";
+    if head1.strip().lower()=="тс":
+     return "Ткач-смерти";
+#    return head1.capitalize().strip()="Ревущий фьорд";
+#    if (tail1.lower() == "us" or tail1.lower() =="na"):
+#        region = "us";
+#    if (tail1.lower() == "eu" or tail1.lower() =="ru" or tail1.lower() =="еу" or tail1.lower() =="ру"):
+#        region = "eu";
+
     return head1.capitalize().strip().replace(" ", "-");
 
 #Returns Regionname from '!command charactername-servername' input
@@ -82,7 +87,7 @@ def pawnstrip(character, server):
         soup = BeautifulSoup(infile, "html.parser")
         return soup.find(text=re.compile(' Pawn: v1: '))
 
-#Returns modified date of a file in local time
+#Returns modified date of a file in local time        
 def mod_date(filename):
     t = os.path.getmtime(filename)
     return datetime.datetime.fromtimestamp(t)
@@ -118,11 +123,11 @@ def is_dps(character, server, region):
         try:
             selected = armory_json['talents'][i]['selected']
             if(selected):
-                return armory_json['talents'][i]['spec']['name'] == 'DPS'
+                return armory_json['talents'][i]['spec']['name'] == 'DPS'      
         except:
             print('No role (isDPS check 3 ) identifier in tier %s.' % i)
 
-#Returns role
+#Returns role            
 def get_role(character, server, region):
     armory_json = requests.get('https://%s.api.battle.net/wow/character/%s/%s?fields=talents&locale=en_US&apikey=%s' % (region, server, character, api_key))
     armory_json = armory_json.json()
@@ -144,12 +149,12 @@ def get_role(character, server, region):
     print("3rd and final attempt to get Role")
     for i in range(0,7):
         try:
-            x = armory_json['talents'][i]['spec']['role']
+            x = armory_json['talents'][i]['spec']['role']  
             return x
         except:
             print('No role (getrole 3) identifier in tier %s.' % i)
 
-#Returns spec
+#Returns spec    
 def get_spec(character, server, region):
     armory_json = requests.get('https://%s.api.battle.net/wow/character/%s/%s?fields=talents&locale=en_US&apikey=%s' % (region, server, character, api_key))
     armory_json = armory_json.json()
@@ -165,7 +170,7 @@ def get_spec(character, server, region):
         try:
             selected = armory_json['talents'][i]['selected']
             if(selected):
-                x = armory_json['talents'][i]['talents'][i]['spec']['name']
+                x = armory_json['talents'][i]['talents'][i]['spec']['name']        
                 return x
         except:
             print('No spec (getspec 2) identifier in tier %s.' % i)
@@ -174,7 +179,7 @@ def get_spec(character, server, region):
         try:
             selected = armory_json['talents'][i]['selected']
             if(selected):
-                x = armory_json['talents'][i]['spec']['name']
+                x = armory_json['talents'][i]['spec']['name']        
                 return x
         except:
             print('No spec3 identifier in tier %s.' % i)
@@ -188,9 +193,9 @@ def on_ready():
     print('Logged in as')
     print(client.user.name)
     print('---------')
-
+    
 @client.event
-@asyncio.coroutine
+@asyncio.coroutine 
 def on_message(message):
     author = message.author
     if message.content.startswith('!реликиас'):
@@ -201,8 +206,10 @@ def on_message(message):
         yield from client.send_message(message.channel, 'http://savepic.net/9422047.png')
     if message.content.startswith('!легисл'):
         yield from client.send_message(message.channel, 'http://savepic.net/9427167.png')
+    if message.content.startswith('!трини'):
+        yield from client.send_message(message.channel, 'http://savepic.ru/14557681.png')
     if message.content.startswith('!help'):
-        yield from client.send_message(message.channel, 'Для того чтоб увидеть вес своих статов наберите: \'!sim имяперсонажа-название сервера-eu\'. Чтоб просто посчитать дпс наберите \'!dps имяперсонажа-название сервера-eu\' Всё маленькими буквами, с пробелом в названии реалма. Я оповещу вас об окончании симуляции.')
+        yield from client.send_message(message.channel, 'Для того чтоб увидеть вес своих статов наберите: \'!sim имяперсонажа-название сервера-eu\'. Чтоб просто посчитать дпс наберите \'!dps имяперсонажа-название сервера-eu\' Всё маленькими буквами, с пробелом в названии реалма. Я оповещу вас об окончании симуляции.')    
         yield from client.send_message(message.channel, 'Данные вашего персонажа берутся из армори, так что обновите его перед симуляцией выйдя из игрового мира')
     if message.content.startswith('!nerd'):
         yield from client.send_message(message.channel, 'Я делаю 10k итераций боя с одной целью (patchwerk), используя статы и таланты из армори на момент сима. Кастомные симы недоступны.')
@@ -233,9 +240,9 @@ def on_message(message):
 
         server = serverstrip(message.content).replace("'", "").strip()
         region = regionfind(message.content).strip()
-        escapeAuthor = author.mention.replace(">", "\>").replace("<", "\<")
+        escapeAuthor = author.mention.replace(">", "\>").replace("<", "\<")        
         print('Ищем %s - %s - %s' % (character, server, region))
-#yield from client.send_message(message.channel, 'Считаем статы для %s - %s - %s. Если одновременно поступило несколько вопросов я могу подвиснуть. Будьте взаимовежливы ' % (character, server, region))
+#        yield from client.send_message(message.channel, 'Считаем статы для %s - %s - %s. Если одновременно поступило несколько вопросов я могу подвиснуть. Будьте взаимовежливы ' % (character, server, region))                    
         if char_exists(character, server, region):
             print("Go Go Go")
             isDPS = is_dps(character, server, region)
@@ -244,8 +251,8 @@ def on_message(message):
             print('Looking at %s - %s - %s who exists and is a %s' % (character, server, region, spec ))
             if (isDPS or spec == 'Shadow'):
                 if(spec == 'Shadow' or True):
-#yield from client.send_message(message.channel, 'Мне требуется несколько минут чтоб обработать этот запрос. Я позову когда закончу рассчеты')
-                    yield from client.send_message(message.channel, 'Текущий спек для %s-%s-%s: %s. Последнее обновление армори: %s' % (character, server, region, spec, armory_date(character, server, region)))                            
+#                    yield from client.send_message(message.channel, 'Мне требуется несколько минут чтоб обработать этот запрос. Я позову когда закончу рассчеты')
+                    yield from client.send_message(message.channel, 'Текущий спек для %s-%s-%s: %s. Последнее обновление армори: %s' % (character, server, region, spec, armory_date(character, server, region)))                                      
                     if(run2):
                         print('Starting a 2 target standalone')
                         yield from client.send_message(message.channel, 'Начинаю сим для двух целей  %s - %s - %s. Это займет несколько минут' % (character, server, region))
@@ -256,20 +263,20 @@ def on_message(message):
                         subprocess.Popen('python3 sim.py %s %s %s %s %s 3 yes' % (character, server, message.channel.id, escapeAuthor, region), shell=True)
                     elif(runAll3):
                         print('Starting the 1,2,3 sim run')
-                        yield from client.send_message(message.channel, 'Начинаю 3 сима для одной, двух и трёх целей %s - %s - %s. Это займет несколько минут.' % (character, server, region))
+                        yield from client.send_message(message.channel, 'Начинаю 3 сима для одной, двух и трёх целей %s - %s - %s. Это займет несколько минут.' % (character, server, region))              
                         subprocess.Popen('python3 sim.py %s %s %s %s %s 1 no' % (character, server, message.channel.id, escapeAuthor, region), shell=True)
                     elif(runStandalone):
                         print('Starting a 1 target standalone')
-#yield from client.send_message(message.channel, 'Начинаю сим для  %s - %s - %s. Это займёт несколько минут' % (character, server, region))
+#                        yield from client.send_message(message.channel, 'Начинаю сим для  %s - %s - %s. Это займёт несколько минут' % (character, server, region))
                         subprocess.Popen('python3 sim.py %s %s %s %s %s 1 yes' % (character, server, message.channel.id, escapeAuthor, region), shell=True)
                     elif(runDPS):
                         print('Starting DPS only')
-#yield from client.send_message(message.channel, 'Начинаю сим для  %s - %s - %s. Это займет несколько минут' % (character, server, region))
+#                        yield from client.send_message(message.channel, 'Начинаю сим для  %s - %s - %s. Это займет несколько минут' % (character, server, region))          
                         subprocess.Popen('python3 dps.py %s %s %s %s %s' % (character, server, message.channel.id, escapeAuthor, region), shell=True)
                     else:
-#Failsafe is single sim
+                        #Failsafe is single sim
                         print('I shouldn\'t be here, but gonna run a single target sim')
-#yield from client.send_message(message.channel, 'Начинаю сим для %s - %s - %s. Это займет несколько минут' % (character, server, region))
+#                        yield from client.send_message(message.channel, 'Начинаю сим для %s - %s - %s. Это займет несколько минут' % (character, server, region))
                         subprocess.Popen('python3 sim.py %s %s %s %s %s 1 yes' % (character, server, message.channel. id, escapeAuthor, region), shell=True)
                 else:
                     yield from client.send_message(message.channel, '%s: Добро пожаловать отсюда' % author.mention)
@@ -281,6 +288,6 @@ def on_message(message):
                 else:
                     yield from client.send_message(message.channel, '%s: Ошибка при сканировании %s-%s-%s. Роль не определена. Убедитесь что вы правильно составили запрос \'!sim charactername-servername-region\'.' % (author.mention, character, server, region))
         else:
-            yield from client.send_message(message.channel, '%s: Персонаж %s-%s-%s не найден. Убедитесь что вы правильно составили запрос \'!sim charactername-servername-region\'.' % (author.mention, character, server, region))
+            yield from client.send_message(message.channel, '%s: Персонаж %s-%s-%s не найден. Убедитесь что вы правильно составили запрос \'!sim charactername-servername-region\'.' % (author.mention, character, server, region))      
 
 client.run(token)

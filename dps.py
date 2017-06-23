@@ -24,7 +24,7 @@ def damagestrip(character, server, region):
     with open('%s%s-%s-%s-dps.html' % (simcraft_path, character, server, region), encoding='utf8') as infile:
         soup = BeautifulSoup(infile, "html.parser")
         return soup.find(text=re.compile(' dps'))
-
+    
 def mod_date(filename):
     t = os.path.getmtime(filename)
     return datetime.datetime.fromtimestamp(t)
