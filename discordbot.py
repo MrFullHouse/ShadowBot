@@ -37,7 +37,6 @@ def charstrip(message, strip):
 def serverstrip(message):
     head, sep, tail = message.partition('-')
     head1, sep1, tail1 = tail.partition('-')
-#    return head1.capitalize().strip().replace(" ", "-");
     if head1.strip().lower()=="рф":
      return "Ревущий-фьорд";
     if head1.strip().lower()=="пб":
@@ -58,11 +57,6 @@ def serverstrip(message):
      return "Ясеневый-лес";
     if head1.strip().lower()=="тс":
      return "Ткач-смерти";
-#    return head1.capitalize().strip()="Ревущий фьорд";
-#    if (tail1.lower() == "us" or tail1.lower() =="na"):
-#        region = "us";
-#    if (tail1.lower() == "eu" or tail1.lower() =="ru" or tail1.lower() =="еу" or tail1.lower() =="ру"):
-#        region = "eu";
 
     return head1.capitalize().strip().replace(" ", "-");
 
@@ -198,16 +192,6 @@ def on_ready():
 @asyncio.coroutine 
 def on_message(message):
     author = message.author
-    if message.content.startswith('!реликиас'):
-        yield from client.send_message(message.channel, 'http://savepic.net/9431260.png')
-    if message.content.startswith('!реликисл'):
-        yield from client.send_message(message.channel, 'http://savepic.net/9433308.png')
-    if message.content.startswith('!легиас'):
-        yield from client.send_message(message.channel, 'http://savepic.net/9422047.png')
-    if message.content.startswith('!легисл'):
-        yield from client.send_message(message.channel, 'http://savepic.net/9427167.png')
-    if message.content.startswith('!трини'):
-        yield from client.send_message(message.channel, 'http://savepic.ru/14557681.png')
     if message.content.startswith('!help'):
         yield from client.send_message(message.channel, 'Для того чтоб увидеть вес своих статов наберите: \'!sim имяперсонажа-название сервера-eu\'. Чтоб просто посчитать дпс наберите \'!dps имяперсонажа-название сервера-eu\' Всё маленькими буквами, с пробелом в названии реалма. Я оповещу вас об окончании симуляции.')    
         yield from client.send_message(message.channel, 'Данные вашего персонажа берутся из армори, так что обновите его перед симуляцией выйдя из игрового мира')
