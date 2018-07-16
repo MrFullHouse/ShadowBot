@@ -178,6 +178,15 @@ def get_spec(character, server, region):
         except:
             print('No spec3 identifier in tier %s.' % i)
 
+#Returns equipped ItemLevel
+def get_itemlevel(character, server, region):
+    print('https://%s.api.battle.net/wow/character/%s/%s?fields=items&locale=en_US&apikey=%s' % (region, server, character, api_key))
+    armory_json = requests.get('https://%s.api.battle.net/wow/character/%s/%s?fields=items&locale=en_US&apikey=%s' % (region, server, character, api_key))
+    armory_json = armory_json.json()
+    il = armory_json['items']['averageItemLevelEquipped']
+    return il
+
+
 @client.event
 @asyncio.coroutine
 def on_ready():
@@ -232,11 +241,12 @@ def on_message(message):
             isDPS = is_dps(character, server, region)
             spec = get_spec(character, server, region)
             role = get_role(character, server, region)
+            itemlevel = get_itemlevel(character, server, region)
             print('Looking at %s - %s - %s who exists and is a %s' % (character, server, region, spec ))
             if (isDPS or spec == 'Shadow'):
                 if(spec == 'Shadow' or True):
 #                    yield from client.send_message(message.channel, 'Мне требуется несколько минут чтоб обработать этот запрос. Я позову когда закончу рассчеты')
-                    yield from client.send_message(message.channel, 'Текущий спек для %s-%s-%s: %s. Последнее обновление армори: %s' % (character, server, region, spec, armory_date(character, server, region)))                                      
+                    yield from client.send_message(message.channel, 'Текущий спек для %s-%s-%s: %s. Надетый ИЛ: %s Последнее обновление армори: %s' % (character, server, region, spec, itemlevel, armory_date(character, server, region)))                                      
                     if(run2):
                         print('Starting a 2 target standalone')
                         yield from client.send_message(message.channel, 'Начинаю сим для двух целей  %s - %s - %s. Это займет несколько минут' % (character, server, region))
