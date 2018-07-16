@@ -22,10 +22,11 @@ make OPENSSL=1 optimized)
 To register for a Blizzard API key, go here: https://dev.battle.net/
 To register a Discord app, go here: https://discordapp.com/developers/applications
 
-Further instructions for setting up are on the wiki: https://github.com/gitket/TempleBot/wiki/How-to-set-up-TempleBot-for-the-first-time.
+Further instructions for setting up are on the wiki: in progress...
 
 Note to those who use this code:
 When updating simcraft version, update the version of simcraft under the !nerd command in discordbot.py so it is up to date
+automatization is in progress...
 
 To run the bot, the command is:
 python3 botrun.py
