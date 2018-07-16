@@ -65,7 +65,7 @@ def on_ready():
 #        yield from client.send_message(client.get_channel(channel), '%s: Напомню что это только для %s текущих талантов и вещей! Разные таланты дадут разные веса.' % (author, character))
         yield from client.send_message(client.get_channel(channel), '%s: %s' % (author, pawnstrip(character, server, region, numberTargets, standAlone)))
         yield from client.send_message(client.get_channel(channel), '%s: %s' % (author, damagestrip(character, server, region, numberTargets)))
-        yield from client.send_message(client.get_channel(channel), 'Ссылка: http://52.88.164.238/output/%s-%s-%s-%s.html' % (character, server, region, numberTargets))
+        yield from client.send_message(client.get_channel(channel), 'Ссылка: http://13.58.35.143/output/%s-%s-%s-%s.html' % (character, server, region, numberTargets))
         if(numberTargets == '1' and standAlone == "no"):
             yield from client.send_message(client.get_channel(channel), 'Начинаю симуляцию для 2 целей')                    
             subprocess.Popen('python3 sim.py %s %s %s %s %s 2 no' % (character, server, channel, escapeAuthor, region), shell=True)

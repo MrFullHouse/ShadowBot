@@ -36,7 +36,7 @@ def on_ready():
             client.accept_invite(x)
         yield from client.send_message(client.get_channel(channel), '%s: Симуляция для %s завершена' % (author, character))
         yield from client.send_message(client.get_channel(channel), '%s: %s' % (author, damagestrip(character, server, region)))
-        yield from client.send_message(client.get_channel(channel), 'Ссылка: http://52.88.164.238/output/%s-%s-%s-dps.html' % (character, server, region))
+        yield from client.send_message(client.get_channel(channel), 'Ссылка: http://13.58.35.143/output/%s-%s-%s-dps.html' % (character, server, region))
         yield from client.logout()
 
 print('%s./simc armory=%s,%s,%s calculate_scale_factors=0 iterations=10000 html=%s-%s-%s-dps.html output=%s-%s.txt fight_style=PatchWerk' % (simcraft_path, region, server, character, character, server, region, character, region))
